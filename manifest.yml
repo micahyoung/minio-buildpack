@@ -1,9 +1,18 @@
 ---
 language: minio
 default_versions:
-dependency_deprecation_dates:
+- name: minio
+  version: develop
+dependency_deprecation_dates: []
 dependencies:
-
+- name: minio
+  version: develop
+  uri: https://raw.githubusercontent.com/micahyoung/minio-buildpack/develop/scripts/install_minio.sh
+  sha256: 1aac74dad7a365fb8b5a7efa580198642d02c427b7dc23466e604c059c3a86b8
+  cf_stacks:
+  - cflinuxfs2
+  - cflinuxfs3
+pre_package: scripts/build.sh
 include_files:
   - README.md
   - VERSION

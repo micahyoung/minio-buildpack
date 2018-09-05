@@ -18,8 +18,7 @@ var _ = Describe("Simple Integration Test", func() {
 		app = nil
 	})
 
-	// TODO This test is pending because it currently fails. It is just an example
-	PIt("app deploys", func() {
+	It("app deploys", func() {
 		app = cutlass.New(filepath.Join(bpDir, "fixtures", "simple_test"))
 		app.Buildpacks = []string{"minio_buildpack"}
 		PushAppAndConfirm(app)

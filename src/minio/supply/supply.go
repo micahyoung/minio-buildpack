@@ -2,6 +2,7 @@ package supply
 
 import (
 	"io"
+	"path/filepath"
 
 	"github.com/cloudfoundry/libbuildpack"
 )
@@ -12,6 +13,7 @@ type Stager interface {
 	DepDir() string
 	DepsIdx() string
 	DepsDir() string
+	AddBinDependencyLink(destPath, sourceName string) error
 }
 
 type Manifest interface {
@@ -43,7 +45,22 @@ type Supplier struct {
 func (s *Supplier) Run() error {
 	s.Log.BeginStep("Supplying minio")
 
-	// TODO: Install any dependencies here...
+	dep := libbuildpack.Dependency{Name: "minio", Version: "develop"}
+	depScript := filepath.Join(s.Stager.DepDir(), "install_minio.sh")
+	if err := s.Installer.InstallDependency(dep, depScript); err != nil {
+		return err
+	}
+
+	output, err := s.Command.Output(s.Stager.DepDir(), "/bin/bash", depScript, s.Stager.DepDir())
+	s.Log.Info(output)
+	if err != nil {
+		return err
+	}
+
+	depMinio := filepath.Join(s.Stager.DepDir(), "minio")
+	if err := s.Stager.AddBinDependencyLink(depMinio, "minio"); err != nil {
+		return err
+	}
 
 	return nil
 }
