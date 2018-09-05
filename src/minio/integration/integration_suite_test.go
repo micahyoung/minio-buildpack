@@ -34,7 +34,7 @@ func init() {
 var _ = SynchronizedBeforeSuite(func() []byte {
 	// Run once
 	if buildpackVersion == "" {
-		packagedBuildpack, err := cutlass.PackageUniquelyVersionedBuildpack("") // "" denotes any stack. Use specific stack (e.g. "cflinuxfs2" if desired)
+		packagedBuildpack, err := cutlass.PackageUniquelyVersionedBuildpack("", true) // "" denotes any stack. Use specific stack (e.g. "cflinuxfs2" if desired)
 		Expect(err).NotTo(HaveOccurred())
 
 		data, err := json.Marshal(packagedBuildpack)
@@ -120,7 +120,7 @@ func AssertUsesProxyDuringStagingIfPresent(fixtureName string) {
 			Expect(err).To(BeNil())
 			defer os.Remove(bpFile)
 
-			traffic, built, err := cutlass.InternetTraffic(
+			traffic, built, _, err := cutlass.InternetTraffic(
 				bpDir,
 				filepath.Join("fixtures", fixtureName),
 				bpFile,
@@ -151,7 +151,7 @@ func AssertNoInternetTraffic(fixtureName string) {
 		Expect(err).To(BeNil())
 		defer os.Remove(bpFile)
 
-		traffic, built, err := cutlass.InternetTraffic(
+		traffic, built, _, err := cutlass.InternetTraffic(
 			bpDir,
 			filepath.Join("fixtures", fixtureName),
 			bpFile,
