@@ -2,6 +2,7 @@ package supply
 
 import (
 	"io"
+	"os"
 	"path/filepath"
 
 	"github.com/cloudfoundry/libbuildpack"
@@ -45,19 +46,16 @@ type Supplier struct {
 func (s *Supplier) Run() error {
 	s.Log.BeginStep("Supplying minio")
 
-	dep := libbuildpack.Dependency{Name: "minio", Version: "develop"}
-	depScript := filepath.Join(s.Stager.DepDir(), "install_minio.sh")
-	if err := s.Installer.InstallDependency(dep, depScript); err != nil {
-		return err
-	}
-
-	output, err := s.Command.Output(s.Stager.DepDir(), "/bin/bash", depScript, s.Stager.DepDir())
-	s.Log.Info(output)
-	if err != nil {
-		return err
-	}
-
+	dep := libbuildpack.Dependency{Name: "minio", Version: "latest"}
 	depMinio := filepath.Join(s.Stager.DepDir(), "minio")
+	if err := s.Installer.InstallDependency(dep, depMinio); err != nil {
+		return err
+	}
+
+	if err := os.Chmod(depMinio, 0755); err != nil {
+		return err
+	}
+
 	if err := s.Stager.AddBinDependencyLink(depMinio, "minio"); err != nil {
 		return err
 	}

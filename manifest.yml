@@ -2,13 +2,13 @@
 language: minio
 default_versions:
 - name: minio
-  version: develop
+  version: latest
 dependency_deprecation_dates: []
 dependencies:
 - name: minio
-  version: develop
-  uri: https://raw.githubusercontent.com/micahyoung/minio-buildpack/develop/scripts/install_minio.sh
-  sha256: 1aac74dad7a365fb8b5a7efa580198642d02c427b7dc23466e604c059c3a86b8
+  version: latest
+  uri: 'https://dl.minio.io/server/minio/release/linux-amd64/archive/minio.RELEASE.2018-09-01T00-38-25Z#.sh'
+  sha256: 6bb7534ab5837d263a107ed3d7c17f63845a4d4e1b7fe2f68f41ee8f502f9353
   cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
