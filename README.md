@@ -84,7 +84,7 @@ for app in s3-storage-{0..1} s3-storage-gateway; do
   cf set-env $app MINIO_SECRET_KEY $SECRET_KEY
 done
 
-cf set-env s3-storage-gateway MINIO_DOMAIN $CLUSTER_HOSTNAME.$CF_DOMAIN 
+cf set-env s3-storage-gateway MINIO_DOMAIN $HOSTNAME.$CF_DOMAIN 
 
 for src in s3-storage-{0..1} s3-storage-gateway; do
   for dst in s3-storage-0 s3-storage-1; do
@@ -96,7 +96,7 @@ for src in s3-storage-{0..1} s3-storage-gateway; do
 done
 
 for app in s3-storage-{0..1} s3-storage-gateway; do
-  cf  start $app &
+  cf start $app &
 done
 wait
 ```
