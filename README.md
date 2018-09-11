@@ -10,7 +10,7 @@ Create a single storage app instance
 
 #### Limitations
 
-* All data will be lost on restart or crash
+* All data will be lost on restart, scale or crash
 * Storage space is limited to instance capacity
 ```
 ACCESS_KEY=""
