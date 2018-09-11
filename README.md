@@ -12,6 +12,8 @@ Create a single storage app instance
 
 * All data will be lost on restart, scale or crash
 * Storage space is limited to instance capacity
+
+#### Initialization
 ```
 ACCESS_KEY=""
 SECRET_KEY=""
@@ -36,6 +38,17 @@ cf set-env s3-storage MINIO_SECRET_KEY $SECRET_KEY
 cf start s3-storage
 ```
 
+#### Create a bucket via cf task
+```
+cf run-task s3-storage \
+  'mc config host add local http://localhost:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY && mc mb local/my-bucket'
+
+cf logs s3-storage --recent
+#   2018-09-11T16:52:56.81-0400 [APP/TASK/73306ae0/0] OUT Added `local` successfully.
+#   2018-09-11T16:52:56.83-0400 [APP/TASK/73306ae0/0] OUT Bucket created successfully `local/my-bucket`.
+#   2018-09-11T16:52:56.84-0400 [APP/TASK/73306ae0/0] OUT Exit status 0
+```
+
 ### 4-node Cluster with Gateway
 
 Create a cluster of 5 app instances (1 gateway, 2 storage apps x 2 instances). This configuration allows you to increase storage, node count and upgrade instances over time, without downtime.
@@ -48,6 +61,7 @@ Create a cluster of 5 app instances (1 gateway, 2 storage apps x 2 instances). T
 * Minio requires N/2+1 instances up to maintain write access which will *not* be true if one app is down. Increase apps to prevent this.
 * See minio docs for additional options and limitations [minio distributed quick-start guide](https://docs.minio.io/docs/distributed-minio-quickstart-guide.html)
 
+#### Initialization
 ```
 ACCESS_KEY=""
 SECRET_KEY=""
@@ -102,7 +116,18 @@ for app in s3-storage-{0..1} s3-storage-gateway; do
 done
 ```
 
-### Update process
+#### Create a bucket via cf task
+```
+cf run-task s3-storage-0 \
+  'mc config host add local http://0.s3-storage-0.apps.internal:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY && mc mb local/my-bucket'
+
+cf logs s3-storage-0 --recent
+#   2018-09-11T16:52:56.81-0400 [APP/TASK/73306ae0/0] OUT Added `local` successfully.
+#   2018-09-11T16:52:56.83-0400 [APP/TASK/73306ae0/0] OUT Bucket created successfully `local/my-bucket`.
+#   2018-09-11T16:52:56.84-0400 [APP/TASK/73306ae0/0] OUT Exit status 0
+```
+
+#### Update instances
 
 Restarting or changing any instance requires a manually `heal` process using the distributed `mc` binary
 
