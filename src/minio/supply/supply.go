@@ -51,12 +51,25 @@ func (s *Supplier) Run() error {
 	if err := s.Installer.InstallDependency(dep, depMinio); err != nil {
 		return err
 	}
+	dep = libbuildpack.Dependency{Name: "mc", Version: "latest"}
+	depMc := filepath.Join(s.Stager.DepDir(), "mc")
+	if err := s.Installer.InstallDependency(dep, depMc); err != nil {
+		return err
+	}
 
 	if err := os.Chmod(depMinio, 0755); err != nil {
 		return err
 	}
 
+	if err := os.Chmod(depMc, 0755); err != nil {
+		return err
+	}
+
 	if err := s.Stager.AddBinDependencyLink(depMinio, "minio"); err != nil {
+		return err
+	}
+
+	if err := s.Stager.AddBinDependencyLink(depMc, "mc"); err != nil {
 		return err
 	}
 
