@@ -109,7 +109,7 @@ cf scale -k 8GB s3-storage-1
 cf ssh s3-storage-1
 $ deps/0/bin/mc config host add local http://localhost:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
 $ deps/0/bin/mc admin heal local
-$ deps/0/bin/mc admin heal info
+$ deps/0/bin/mc admin info local
 ```
 
 ## Development
