@@ -30,8 +30,8 @@ cf push s3-storage \
   ;
 
 
-cf set-env $app MINIO_ACCESS_KEY $ACCESS_KEY
-cf set-env $app MINIO_SECRET_KEY $SECRET_KEY
+cf set-env s3-storage MINIO_ACCESS_KEY $ACCESS_KEY
+cf set-env s3-storage MINIO_SECRET_KEY $SECRET_KEY
 
 cf start s3-storage
 ```
