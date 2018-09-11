@@ -54,7 +54,7 @@ HOSTNAME=""
 CF_DOMAIN=""
 INIT_DIR=$(dirname $(mktemp $(mktemp -d)/XXX))
 
-for app in s3-storage-0 s3-storage-1; do
+for app in s3-storage-{0..1}; do
   cf push $app \
     --hostname $app -d apps.internal \
     -c 'minio server http://{0...1}.s3-storage-{0...1}.apps.internal/home/vcap/app/shared' \
@@ -79,14 +79,14 @@ cf push s3-storage-gateway \
   -p $INIT_DIR \
   ;
 
-for app in s3-storage-0 s3-storage-1 s3-storage-gateway; do
+for app in s3-storage-{0..1} s3-storage-gateway; do
   cf set-env $app MINIO_ACCESS_KEY $ACCESS_KEY
   cf set-env $app MINIO_SECRET_KEY $SECRET_KEY
 done
 
 cf set-env s3-storage-gateway MINIO_DOMAIN $CLUSTER_HOSTNAME.$CF_DOMAIN 
 
-for src in s3-storage-0 s3-storage-1 s3-storage-gateway; do
+for src in s3-storage-{0..1} s3-storage-gateway; do
   for dst in s3-storage-0 s3-storage-1; do
     cf add-network-policy $src \
       --destination-app $dst \
@@ -95,9 +95,10 @@ for src in s3-storage-0 s3-storage-1 s3-storage-gateway; do
   done
 done
 
-for app in s3-storage-0 s3-storage-1 s3-storage-gateway; do
-  cf start $app
+for app in s3-storage-{0..1} s3-storage-gateway; do
+  cf  start $app &
 done
+wait
 ```
 
 ### Update process
