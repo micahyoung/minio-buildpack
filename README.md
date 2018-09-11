@@ -96,9 +96,8 @@ for src in s3-storage-{0..1} s3-storage-gateway; do
 done
 
 for app in s3-storage-{0..1} s3-storage-gateway; do
-  cf start $app &
+  cf start $app 
 done
-wait
 ```
 
 ### Update process
