@@ -71,6 +71,7 @@ done
 
 cf push s3-storage-gateway \
   -c 'minio gateway s3 http://0.s3-storage-0.apps.internal:9000 --address :$PORT' \
+  -k 128MB \
   -m 128M \
   -u process \
   -n $HOSTNAME \
