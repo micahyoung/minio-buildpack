@@ -109,7 +109,7 @@ done
 
 #### Healing instances
 
-Restarting or changing any instance requires a manually `heal` process using the distributed `mc` binary
+Restarting or changing any instance requires a manually `heal` process using the distributed `mc` binary on a machine *outside* the cluster.
 
 ```bash
 cf scale -k 8GB s3-storage-1
