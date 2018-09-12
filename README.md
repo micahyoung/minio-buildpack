@@ -124,7 +124,9 @@ Note: Minio does not automatically rebalance data after node recreation. [more](
 ### Create a bucket via cf task
 ```bash
 cf run-task s3-storage \
-  'mc config host add local http://localhost:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY && mc mb local/my-bucket'
+  'mc config host add local http://localhost:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY \
+  && mc mb local/my-bucket \
+  && mc policy download local/my-bucket'
 
 cf logs s3-storage --recent
 #   2018-09-11T16:52:56.81-0400 [APP/TASK/73306ae0/0] OUT Added `local` successfully.
