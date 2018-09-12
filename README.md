@@ -131,6 +131,7 @@ cf run-task s3-storage \
 cf logs s3-storage --recent
 #   2018-09-11T16:52:56.81-0400 [APP/TASK/73306ae0/0] OUT Added `local` successfully.
 #   2018-09-11T16:52:56.83-0400 [APP/TASK/73306ae0/0] OUT Bucket created successfully `local/my-bucket`.
+#   2018-09-11T16:52:56.84-0400 [APP/TASK/73306ae0/0] OUT Access permission for `local/my-bucket` is set to `download`
 #   2018-09-11T16:52:56.84-0400 [APP/TASK/73306ae0/0] OUT Exit status 0
 ```
 
