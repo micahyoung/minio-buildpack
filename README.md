@@ -24,7 +24,7 @@ INIT_DIR=$(dirname $(mktemp $(mktemp -d)/XXX))
 cf push s3-storage \
   -b https://github.com/micahyoung/minio-buildpack.git \
   -k 4GB \
-  -m 128MB \
+  -m 256MB \
   -p $INIT_DIR \
   -u process \
   --no-start \
@@ -75,7 +75,7 @@ for app in s3-storage-{0..1}; do
     -c 'minio server http://{0...1}.s3-storage-{0...1}.apps.internal/home/vcap/app/shared' \
     -i 2 \
     -k 4GB \
-    -m 128MB \
+    -m 256MB \
     -u process \
     --no-start \
     -b https://github.com/micahyoung/minio-buildpack.git \
