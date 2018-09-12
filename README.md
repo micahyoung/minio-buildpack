@@ -109,7 +109,7 @@ done
 
 #### Healing instances
 
-Restarting or changing any instance requires a manually `heal` process using the distributed `mc` binary on a machine *outside* the cluster.
+Restarting or changing any instance requires a manually `heal` process using the distributed `mc` binary.
 
 ```bash
 cf scale -k 8GB s3-storage-1
@@ -134,7 +134,7 @@ cf logs s3-storage --recent
 
 ### Backup/restore
 
-Backups and restores can be performed using the `mc mirror` commands
+Backups and restores can be performed using the `mc mirror` commands on a machine *outside* the cluster.
 
 First, alias the public s3 url
 ```bash
