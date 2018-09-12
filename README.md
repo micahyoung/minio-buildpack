@@ -49,7 +49,7 @@ Create a cluster of 5 app instances (1 gateway, 4 storage apps x 1 instances). T
 * Minio requires at least N/2 instances up to maintain read-only access and prevent data loss.
 * Minio requires at least N/2+1 instances up to maintain write access.
 * Instance count cannot be increased without recreating the cluster.
-* Recovery requires manual healing (see below).
+* Recovery requires manual healing ([see below](#healing-instances)).
 * See minio docs for additional options and limitations [minio distributed quick-start guide](https://docs.minio.io/docs/distributed-minio-quickstart-guide.html)
 
 #### Initialization
