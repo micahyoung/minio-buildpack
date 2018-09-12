@@ -40,14 +40,14 @@ cf start s3-storage
 
 ### 4-node Cluster with Gateway
 
-Create a cluster of 5 app instances (1 gateway, 2 storage apps x 2 instances). This configuration allows you to increase storage, node count and upgrade instances over time, without downtime.
+Create a cluster of 5 app instances (1 gateway, 4 storage apps x 1 instances). This configuration allows you to increase storage, node count and upgrade instances over time, without downtime.
 
 #### Limitations
 * Use only for emphemeral data - a more robust solution with a persistent storage and backups should be used otherwise.
 * Gateway needs app-0/instance-0 to be up at all times.
 * Example below is the minimum minio cluster size and therefore mininimally robust to failures.
 * Minio requires N/2 instances up to maintain read-only access and prevent data loss.
-* Minio requires N/2+1 instances up to maintain write access which will *not* be true if one app is down. Increase apps to prevent this.
+* Minio requires N/2+1 instances up to maintain write access which will *not* be true if *two* storage instances is down. Increase apps or instances to prevent this.
 * See minio docs for additional options and limitations [minio distributed quick-start guide](https://docs.minio.io/docs/distributed-minio-quickstart-guide.html)
 
 #### Initialization
@@ -58,13 +58,13 @@ HOSTNAME=""
 CF_DOMAIN=""
 INIT_DIR=$(dirname $(mktemp $(mktemp -d)/XXX))
 
-for app in s3-storage-{0..1}; do
+for app in s3-storage-{0..3}; do
   cf push $app \
     --hostname $app -d apps.internal \
-    -c 'minio server http://{0...1}.s3-storage-{0...1}.apps.internal/home/vcap/app/shared' \
+    -c 'minio server http://0.s3-storage-{0...3}.apps.internal/home/vcap/app/shared' \
     -i 2 \
     -k 4GB \
-    -m 256MB \
+    -m 1GB \
     -u process \
     --no-start \
     -b https://github.com/micahyoung/minio-buildpack.git \
@@ -84,15 +84,15 @@ cf push s3-storage-gateway \
   -p $INIT_DIR \
   ;
 
-for app in s3-storage-{0..1} s3-storage-gateway; do
+for app in s3-storage-{0..3} s3-storage-gateway; do
   cf set-env $app MINIO_ACCESS_KEY $ACCESS_KEY
   cf set-env $app MINIO_SECRET_KEY $SECRET_KEY
 done
 
 cf set-env s3-storage-gateway MINIO_DOMAIN $HOSTNAME.$CF_DOMAIN 
 
-for src in s3-storage-{0..1} s3-storage-gateway; do
-  for dst in s3-storage-0 s3-storage-1; do
+for src in s3-storage-{0..3} s3-storage-gateway; do
+  for dst in s3-storage-{0..3}; do
     cf add-network-policy $src \
       --destination-app $dst \
       --port 9000 --protocol tcp \
@@ -100,7 +100,7 @@ for src in s3-storage-{0..1} s3-storage-gateway; do
   done
 done
 
-for app in s3-storage-{0..1} s3-storage-gateway; do
+for app in s3-storage-{0..3} s3-storage-gateway; do
   cf start $app 
 done
 ```
