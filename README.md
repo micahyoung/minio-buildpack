@@ -1,6 +1,6 @@
 # Minio Buildpack 
 
-Cloud Foundry Buildpack providing minio server storage
+Cloud Foundry Buildpack providing [minio server storage](https://www.minio.io/)
 
 ## Usage
 
