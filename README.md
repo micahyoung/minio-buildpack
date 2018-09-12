@@ -14,7 +14,7 @@ Create a single storage app instance
 * Storage space is limited to instance capacity
 
 #### Initialization
-```
+```bash
 ACCESS_KEY=""
 SECRET_KEY=""
 HOSTNAME=""
@@ -51,7 +51,7 @@ Create a cluster of 5 app instances (1 gateway, 2 storage apps x 2 instances). T
 * See minio docs for additional options and limitations [minio distributed quick-start guide](https://docs.minio.io/docs/distributed-minio-quickstart-guide.html)
 
 #### Initialization
-```
+```bash
 ACCESS_KEY=""
 SECRET_KEY=""
 HOSTNAME=""
@@ -109,7 +109,7 @@ done
 
 Restarting or changing any instance requires a manually `heal` process using the distributed `mc` binary
 
-```
+```bash
 cf scale -k 8GB s3-storage-1
 cf ssh s3-storage-1
 $ deps/0/bin/mc config host add local http://localhost:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
@@ -118,7 +118,7 @@ $ deps/0/bin/mc admin info local
 ```
 
 ### Create a bucket via cf task
-```
+```bash
 cf run-task s3-storage \
   'mc config host add local http://localhost:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY && mc mb local/my-bucket'
 
@@ -133,17 +133,17 @@ cf logs s3-storage --recent
 Backups and restores can be performed using the `mc mirror` commands
 
 First, alias the public s3 url
-```
+```bash
 mc config host add cluster https://public-s3-hostname.my-domain.net $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
 ```
 
 Backup:
-```
+```bash
 mc mirror cluster/ local-backup-dir/
 ```
 
 Restore (will also rebalance after `heal`):
-```
+```bash
 mc mirror --overwrite local-backup-dir/ cluster/ 
 ```
 
