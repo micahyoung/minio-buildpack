@@ -119,7 +119,7 @@ $ deps/0/bin/mc admin heal local
 $ deps/0/bin/mc admin info local
 ```
 
-Note: Minio does not rebalance data after node recreation. [more](https://github.com/minio/minio/issues/3478#issuecomment-268203660).
+Note: Minio does not automatically rebalance data after node recreation. [more](https://github.com/minio/minio/issues/3478#issuecomment-268203660). Consider using mc mirror` afterwards to download then overwrite.
 
 ### Create a bucket via cf task
 ```bash
