@@ -49,6 +49,7 @@ Create a cluster of 5 app instances (1 gateway, 4 storage apps x 1 instances). T
 * Minio requires at least N/2 instances up to maintain read-only access and prevent data loss.
 * Minio requires at least N/2+1 instances up to maintain write access.
 * Instance count cannot be increased without recreating the cluster.
+* Recovery requires manual healing (see below).
 * See minio docs for additional options and limitations [minio distributed quick-start guide](https://docs.minio.io/docs/distributed-minio-quickstart-guide.html)
 
 #### Initialization
@@ -106,7 +107,7 @@ for app in s3-storage-{0..3} s3-storage-gateway; do
 done
 ```
 
-#### Update instances
+#### Healing instances
 
 Restarting or changing any instance requires a manually `heal` process using the distributed `mc` binary
 
@@ -117,6 +118,8 @@ $ deps/0/bin/mc config host add local http://localhost:9000 $MINIO_ACCESS_KEY $M
 $ deps/0/bin/mc admin heal local
 $ deps/0/bin/mc admin info local
 ```
+
+Note: Minio does not rebalance data after node recreation. [more](https://github.com/minio/minio/issues/3478#issuecomment-268203660).
 
 ### Create a bucket via cf task
 ```bash
