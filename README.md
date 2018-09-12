@@ -40,14 +40,15 @@ cf start s3-storage
 
 ### 4-node Cluster with Gateway
 
-Create a cluster of 5 app instances (1 gateway, 4 storage apps x 1 instances). This configuration allows you to increase storage, node count and upgrade instances over time, without downtime.
+Create a cluster of 5 app instances (1 gateway, 4 storage apps x 1 instances). This configuration allows you to scale and refresh storage instances instances over time, without downtime.
 
 #### Limitations
 * Use only for emphemeral data - a more robust solution with a persistent storage and backups should be used otherwise.
 * Gateway needs app-0/instance-0 to be up at all times.
-* Example below is the minimum minio cluster size and therefore mininimally robust to failures.
-* Minio requires N/2 instances up to maintain read-only access and prevent data loss.
-* Minio requires N/2+1 instances up to maintain write access which will *not* be true if *two* storage instances is down. Increase apps or instances to prevent this.
+* 4 instances is the minimum minio cluster size and therefore mininimally robust to failures.
+* Minio requires at least N/2 instances up to maintain read-only access and prevent data loss.
+* Minio requires at least N/2+1 instances up to maintain write access.
+* Instance count cannot be increased without recreating the cluster.
 * See minio docs for additional options and limitations [minio distributed quick-start guide](https://docs.minio.io/docs/distributed-minio-quickstart-guide.html)
 
 #### Initialization
