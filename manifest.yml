@@ -7,8 +7,8 @@ dependency_deprecation_dates: []
 dependencies:
 - name: minio
   version: latest
-  uri: 'https://dl.minio.io/server/minio/release/linux-amd64/archive/minio.RELEASE.2018-09-01T00-38-25Z#suffix=.sh'
-  sha256: 6bb7534ab5837d263a107ed3d7c17f63845a4d4e1b7fe2f68f41ee8f502f9353
+  uri: 'https://dl.minio.io/server/minio/release/linux-amd64/archive/minio.RELEASE.2018-09-12T18-49-56Z#suffix=.sh'
+  sha256: 39d4fb356cd528d0647fb4082797f342fad3015af96d17e563c2b0e46c6ae8c4
   cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
