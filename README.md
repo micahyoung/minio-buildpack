@@ -43,6 +43,7 @@ cf start s3-storage
 Create a cluster of 5 app instances (1 gateway, 4 storage apps x 1 instances). This configuration allows you to scale and refresh storage instances instances over time, without downtime.
 
 #### Limitations
+* Permanent data loss occurs if more than n/2 instances are down (stopped/restarted).
 * Use only for emphemeral data - a more robust solution with a persistent storage and backups should be used otherwise.
 * Gateway needs app-0/instance-0 to be up at all times.
 * 4 instances is the minimum minio cluster size and therefore mininimally robust to failures.
