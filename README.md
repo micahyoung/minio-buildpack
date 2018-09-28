@@ -103,9 +103,13 @@ for src in s3-storage-{0..3} s3-storage-gateway; do
   done
 done
 
-for app in s3-storage-{0..3} s3-storage-gateway; do
-  cf start $app 
+for app in s3-storage-{0..3}; do
+  cf start $app &
 done
+
+wait
+
+cf start s3-storage-gateway
 ```
 
 #### Healing instances
