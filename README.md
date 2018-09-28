@@ -65,7 +65,7 @@ for app in s3-storage-{0..3}; do
   cf push $app \
     --hostname $app -d apps.internal \
     -c 'minio server http://0.s3-storage-{0...3}.apps.internal/home/vcap/app/shared' \
-    -i 2 \
+    -i 1 \
     -k 4GB \
     -m 1GB \
     -u process \
