@@ -4,6 +4,48 @@ Cloud Foundry Buildpack providing [minio server storage](https://www.minio.io/)
 
 ## Usage
 
+### Amazon S3 Edge Caching
+
+Create a single gateway app instance - backed by an Amazon S3 cluster 
+
+#### Limitations
+
+* Only works when apps have public internet access
+* Cache space is limited to instance capacity
+
+#### Initialization
+```
+MINIO_ACCESS_KEY="<aws access key>"
+MINIO_SECRET_KEY="<aws secret key>"
+MINIO_CACHE_DRIVES="/var/vcap/app/data"
+MINIO_CACHE_EXCLUDE="bucket1/*;*.png"
+MINIO_CACHE_EXPIRY=40
+MINIO_CACHE_MAXUSE=80
+HOSTNAME=""
+CF_DOMAIN=""
+INIT_DIR=$(dirname $(mktemp $(mktemp -d)/XXX))
+
+cf push s3-storage \
+  -c 'minio gateway s3 --address :$PORT' \
+  -b https://github.com/micahyoung/minio-buildpack.git \
+  -k 4GB \
+  -m 256MB \
+  -p $INIT_DIR \
+  -u process \
+  --no-start \
+  --hostname $HOSTNAME -d $CF_DOMAIN \
+  ;
+
+cf set-env s3-storage MINIO_ACCESS_KEY $MINIO_ACCESS_KEY
+cf set-env s3-storage MINIO_SECRET_KEY $MINIO_SECRET_KEY
+cf set-env s3-storage MINIO_CACHE_DRIVES $MINIO_CACHE_DRIVES
+cf set-env s3-storage MINIO_CACHE_EXCLUDE $MINIO_CACHE_EXCLUDE
+cf set-env s3-storage MINIO_CACHE_EXPIRY $MINIO_CACHE_EXPIRY
+cf set-env s3-storage MINIO_CACHE_MAXUSE $MINIO_CACHE_MAXUSE
+
+cf start s3-storage
+```
+
 ### Single instance
 
 Create a single storage app instance
