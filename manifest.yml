@@ -1,32 +1,30 @@
----
-language: minio
 default_versions:
 - name: minio
   version: latest
-dependency_deprecation_dates: []
 dependencies:
-- name: minio
-  version: latest
-  uri: 'https://dl.minio.io/server/minio/release/linux-amd64/archive/minio.RELEASE.2018-09-12T18-49-56Z#suffix=.sh'
-  sha256: 39d4fb356cd528d0647fb4082797f342fad3015af96d17e563c2b0e46c6ae8c4
-  cf_stacks:
+- cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
-- name: mc
+  name: minio
+  sha256: e8c69514141f330cbc943488e1d1925c3efa9e103221a572ab1f9f5f107a4dbe
+  uri: https://dl.minio.io/server/minio/release/linux-amd64/archive/minio.RELEASE.2018-11-17T01-23-48Z#suffix=.sh
   version: latest
-  uri: 'https://dl.minio.io/client/mc/release/linux-amd64/archive/mc.RELEASE.2018-09-10T23-39-12Z#suffix=.sh'
-  sha256: b72a959d0033c8d23cc050888d5ed374b866965b37c420fec857ab453185f82e
-  cf_stacks:
+- cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
-pre_package: scripts/build.sh
+  name: mc
+  sha256: c76f9c8ca3a5f9acdf7e5e99d9ca1f5f56e0dc0aa92eabaa052947ffd5c3ae93
+  uri: https://dl.minio.io/client/mc/release/linux-amd64/archive/mc.RELEASE.2018-11-06T01-12-20Z#suffix=.sh
+  version: latest
+dependency_deprecation_dates: []
 include_files:
-  - README.md
-  - VERSION
-  - bin/detect
-  - bin/compile
-  - bin/supply
-  - bin/finalize
-  - bin/release
-  - manifest.yml
+- README.md
+- VERSION
+- bin/detect
+- bin/compile
+- bin/supply
+- bin/finalize
+- bin/release
+- manifest.yml
+language: minio
 pre_package: scripts/build.sh
