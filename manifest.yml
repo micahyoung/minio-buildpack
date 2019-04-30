@@ -5,16 +5,23 @@ dependencies:
 - cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
-  name: minio
-  sha256: 2cb5603f3cc25dabc5ba7670ca125ee42e513ff9fc5c024b08d8d04103cf09cd
-  uri: https://dl.minio.io/server/minio/release/linux-amd64/archive/minio.RELEASE.2019-04-04T18-31-46Z#suffix=.sh
+  name: minio-linux
+  sha256: fa7e8b1c809a1e97bea580718e7e7e64e2284d29f9919dddc9b4c08e285fa5de
+  uri: https://dl.minio.io/server/minio/release/linux-amd64/archive/minio.RELEASE.2019-04-23T23-50-36Z#suffix=.sh
+  version: latest
+- cf_stacks:
+  - windows2016
+  - windows
+  name: minio-windows
+  sha256: https://dl.minio.io/server/minio/release/windows-amd64/archive/minio.RELEASE.2019-04-23T23-50-36Z
+  uri: https://dl.minio.io/server/minio/release/windows-amd64/archive/minio.RELEASE.2019-04-23T23-50-36Z#suffix=.sh
   version: latest
 - cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
   name: mc
-  sha256: d4ef6acabb7c5b779b2082b7d1fa9f9ed0b2e6d3162f1dc56c02bf2d045c6308
-  uri: https://dl.minio.io/client/mc/release/linux-amd64/archive/mc.RELEASE.2019-04-03T17-59-57Z#suffix=.sh
+  sha256: d76ed968cabb85eb8c0cb21a4ea6b14af9c322b1a914233240ac62658f038a8c
+  uri: https://dl.minio.io/client/mc/release/linux-amd64/archive/mc.RELEASE.2019-04-24T00-09-41Z#suffix=.sh
   version: latest
 dependency_deprecation_dates: []
 include_files:
